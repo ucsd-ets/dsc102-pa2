@@ -16,7 +16,7 @@ spec:
       containers:
         - name: spark-master
           image: scnakandala/dsc102-pa2-spark:latest
-          imagePullPolicy: Always
+          imagePullPolicy: IfNotPresent
           env:
             - name: JUPYTER_TOKEN
               value: $JUPYTER_TOKEN
@@ -102,7 +102,7 @@ spec:
       containers:
         - name: spark-worker
           image: scnakandala/dsc102-pa2-spark:latest
-          imagePullPolicy: Always
+          imagePullPolicy: IfNotPresent
           command: ["/spark-worker"]
           ports:
             - containerPort: 8081
