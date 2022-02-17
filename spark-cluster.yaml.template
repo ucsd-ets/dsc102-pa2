@@ -74,6 +74,7 @@ spec:
             - name: JUPYTER_TOKEN
               value: $JUPYTER_TOKEN
           command: ["/spark-master"]
+          args: ["jupyter"]
           ports:
             - containerPort: 7077
             - containerPort: 8080
