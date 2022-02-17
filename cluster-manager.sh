@@ -46,6 +46,7 @@ if [ "$#" -eq 1 ] && [ $1 == 'create' ]; then
 	echo "=> Next create a SSH tunnel from your personal computer using the following command:"
         echo "        $SSH_COMMAND"
 	echo ""
+	echo "=> Link to PySpark/Jupyter UI: http://127.0.0.1:8888?token=$JUPYTER_TOKEN"
 	echo "=> Link to Spark cluster manager UI: http://127.0.0.1:8080"
 	echo "=> Link to Spark job UI: http://127.0.0.1:4040"
         echo "========================================================================="
