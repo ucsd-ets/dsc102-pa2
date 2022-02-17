@@ -112,3 +112,9 @@ venv.bak/
 
 # macOS
 .DS_Store
+
+# general
+jupyter_token
+spark-cluster.yaml
+*.log
+port_forwarding

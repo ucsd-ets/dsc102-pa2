@@ -1,12 +1,13 @@
 #!/bin/bash
-
+exec > >(tee -i cluster-manager.log)
 BASEDIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 if [ "$#" -eq 1 ] && [ $1 == 'create' ]; then
 	JUPYTER_TOKEN=$(openssl rand -hex 16)
-	# Keeping this for 3. We cannot go beyond 3
-	NUM_WORKERS=3
-	cat $BASEDIR/spark-cluster.yaml.template | sed -e "s/\$JUPYTER_TOKEN/$JUPYTER_TOKEN/" -e "s/\$NUM_WORKERS/$NUM_WORKERS/"  > $BASEDIR/spark-cluster.yaml
-	echo $JUPYTER_TOKEN > $BASEDIR/jupyter_token
+	# Keeping this for 2. We cannot go beyond 3
+	NUM_WORKERS=2
+        CLUSTER_UID=$(id -u)
+	cat $BASEDIR/spark-cluster.yaml.template | sed -e "s/\$JUPYTER_TOKEN/$JUPYTER_TOKEN/" -e "s/\$NUM_WORKERS/$NUM_WORKERS/" -e "s/\$USERNAME/$USER/g" -e "s/\$USER_ID/$CLUSTER_UID/g" > $BASEDIR/spark-cluster.yaml
+        echo $JUPYTER_TOKEN > $BASEDIR/jupyter_token
 	status=$(cat $BASEDIR/spark-cluster.yaml | kubectl create -f - 2>&1 | grep Error)
 	if [[ "$status" == *"Error"* ]]; then
 	    echo $status
@@ -14,7 +15,6 @@ if [ "$#" -eq 1 ] && [ $1 == 'create' ]; then
         fi
 
 	sleep 5
-
 	kubectl get pods
 	status="$(kubectl get pods 2>&1 | awk '/spark-/ {print $3}')"
 	while [[ $status == *'ContainerCreating'* ]]
@@ -39,7 +39,7 @@ if [ "$#" -eq 1 ] && [ $1 == 'create' ]; then
         SPARK_MGR_PORT="$(cat $BASEDIR/port_forwarding | grep 8080 | grep 127.0.0.1 | awk '//{print $3}')"
 	SPARK_JOB_PORT="$(cat $BASEDIR/port_forwarding | grep 4040 | grep 127.0.0.1 | awk '//{print $3}')"
 
-	SSH_COMMAND="ssh -N -L 127.0.0.1:8888:$JUPYTER_PORT -L 127.0.0.1:8080:$SPARK_MGR_PORT -L 127.0.0.1:4040:$SPARK_JOB_PORT $(whoami)@dsmlp-login.ucsd.edu"
+	SSH_COMMAND="ssh -N -L 127.0.0.1:8080:$SPARK_MGR_PORT -L 127.0.0.1:4040:$SPARK_JOB_PORT $(whoami)@dsmlp-login.ucsd.edu"
 
 	echo ""
 	echo "========================================================================="
@@ -47,7 +47,6 @@ if [ "$#" -eq 1 ] && [ $1 == 'create' ]; then
 	echo "=> Next create a SSH tunnel from your personal computer using the following command:"
         echo "        $SSH_COMMAND"
 	echo ""
-	echo "=> Link to PySpark/Jupyter UI: http://127.0.0.1:8888?token=$JUPYTER_TOKEN"
 	echo "=> Link to Spark cluster manager UI: http://127.0.0.1:8080"
 	echo "=> Link to Spark job UI: http://127.0.0.1:4040"
         echo "========================================================================="
@@ -90,7 +89,7 @@ elif [ $# -eq 1 ] && [ $1 == 'port-forward' ]; then
             SPARK_MGR_PORT="$(cat $BASEDIR/port_forwarding | grep 8080 | grep 127.0.0.1 | awk '//{print $3}')"
             SPARK_JOB_PORT="$(cat $BASEDIR/port_forwarding | grep 4040 | grep 127.0.0.1 | awk '//{print $3}')"
 
-            SSH_COMMAND="ssh -N -L 127.0.0.1:8888:$JUPYTER_PORT -L 127.0.0.1:8080:$SPARK_MGR_PORT -L 127.0.0.1:4040:$SPARK_JOB_PORT $(whoami)@dsmlp-login.ucsd.edu"
+            SSH_COMMAND="ssh -N -L 127.0.0.1:8080:$SPARK_MGR_PORT -L 127.0.0.1:4040:$SPARK_JOB_PORT $(whoami)@dsmlp-login.ucsd.edu"
 
             echo ""
             echo "========================================================================="
@@ -108,4 +107,3 @@ elif [ $# -eq 1 ] && [ $1 == 'port-forward' ]; then
 else
     echo 'Valid arguments are: create, delete, and port-forward'
 fi
-
