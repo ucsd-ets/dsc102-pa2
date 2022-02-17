@@ -14,12 +14,12 @@ MASTER_IP = 'spark://0.0.0.0:7077'
 
 
 class data_cat:
-    review_filename = '/ds102-wi21-A00-public/dataset/user_reviews_train.csv'
-    product_filename = '/ds102-wi21-A00-public/dataset/metadata_header.csv'
-    product_processed_filename = '/ds102-wi21-A00-public/dataset/product_processed.csv'
-    ml_features_train_filename = '/ds102-wi21-A00-public/dataset/ml_features_train.parquet'
-    ml_features_test_filename = '/ds102-wi21-A00-public/dataset/ml_features_test.parquet'
-    test_results_root = '/ds102-wi21-A00-public/test_results'
+    review_filename = '/ds102-wi22-a00-public/dataset/user_reviews_train.csv'
+    product_filename = '/ds102-wi22-a00-public/dataset/metadata_header.csv'
+    product_processed_filename = '/ds102-wi22-a00-public/dataset/product_processed.csv'
+    ml_features_train_filename = '/ds102-wi22-a00-public/dataset/ml_features_train.parquet'
+    ml_features_test_filename = '/ds102-wi22-a00-public/dataset/ml_features_test.parquet'
+    test_results_root = '/ds102-wi22-a00-public/test_results'
 
 
 def quantile(rdd, p, sample=None, seed=SEED):

@@ -39,8 +39,8 @@ spec:
               cpu: 2
           volumeMounts:
             - name: ds102-wi22-pa2-datasets
-              mountPath: /ds102-wi22-A00-public
-              subPath: "ds102-wi22-A00-public"
+              mountPath: /ds102-wi22-a00-public
+              subPath: "ds102-wi22-a00-public"
               readOnly: true
             - name: home
               mountPath: /home
@@ -121,8 +121,8 @@ spec:
               cpu: 2
           volumeMounts:
             - name: ds102-wi22-pa2-datasets
-              mountPath: /ds102-wi22-A00-public
-              subPath: "ds102-wi22-A00-public"
+              mountPath: /ds102-wi22-a00-public
+              subPath: "ds102-wi22-a00-public"
               readOnly: true
             - name: home
               mountPath: /home
