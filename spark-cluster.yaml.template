@@ -120,14 +120,14 @@ spec:
               memory: "20Gi"
               cpu: 2
           volumeMounts:
-            - name: ds102-wi21-pa2-datasets
-              mountPath: /ds102-wi21-A00-public
-              subPath: "ds102-wi21-A00-public"
+            - name: ds102-wi22-pa2-datasets
+              mountPath: /ds102-wi22-A00-public
+              subPath: "ds102-wi22-A00-public"
               readOnly: true
             - name: home
               mountPath: /home
       volumes:
-        - name: ds102-wi21-pa2-datasets
+        - name: ds102-wi22-pa2-datasets
           persistentVolumeClaim:
             claimName: dsmlp-datasets-nfs
         - name: home
