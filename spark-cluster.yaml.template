@@ -68,7 +68,7 @@ spec:
             mountPath: /home/$USERNAME
           securityContext:
             runAsUser: $USER_ID
-          image: ucsdets/spark-master:2021.3.1
+          image: ucsdets/spark-master:2022.1.1
           imagePullPolicy: Always
           env:
             - name: JUPYTER_TOKEN
@@ -148,7 +148,7 @@ spec:
           - name: ds102-datasets
             mountPath: /datasets/ds102-wi22-a00-public
             subPath: "ds102-wi22-a00-public"
-          image: ucsdets/spark-master:2021.3.1
+          image: ucsdets/spark-master:2022.1.1
           imagePullPolicy: IfNotPresent
           securityContext:
             runAsUser: $USER_ID
