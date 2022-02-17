@@ -46,7 +46,6 @@ if [ "$#" -eq 1 ] && [ $1 == 'create' ]; then
 	echo "=> Next create a SSH tunnel from your personal computer using the following command:"
         echo "        $SSH_COMMAND"
 	echo ""
-	echo "=> Link to PySpark/Jupyter UI: http://127.0.0.1:8888?token=$JUPYTER_TOKEN"
 	echo "=> Link to Spark cluster manager UI: http://127.0.0.1:8080"
 	echo "=> Link to Spark job UI: http://127.0.0.1:4040"
         echo "========================================================================="
@@ -89,7 +88,11 @@ elif [ $# -eq 1 ] && [ $1 == 'port-forward' ]; then
             SPARK_MGR_PORT="$(cat $BASEDIR/port_forwarding | grep 8080 | grep 127.0.0.1 | awk '//{print $3}')"
             SPARK_JOB_PORT="$(cat $BASEDIR/port_forwarding | grep 4040 | grep 127.0.0.1 | awk '//{print $3}')"
 
+<<<<<<< HEAD
 	    SSH_COMMAND="ssh -N -L 127.0.0.1:8888:$JUPYTER_PORT -L 127.0.0.1:8080:$SPARK_MGR_PORT -L 127.0.0.1:4040:$SPARK_JOB_PORT $(whoami)@dsmlp-login.ucsd.edu"
+=======
+            SSH_COMMAND="ssh -N -L 127.0.0.1:8080:$SPARK_MGR_PORT -L 127.0.0.1:4040:$SPARK_JOB_PORT $(whoami)@dsmlp-login.ucsd.edu"
+>>>>>>> 65b4463 (Updated for dsc102 wi22)
 
             echo ""
             echo "========================================================================="
